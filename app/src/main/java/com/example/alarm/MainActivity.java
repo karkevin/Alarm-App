@@ -10,6 +10,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.provider.CalendarContract;
+import android.text.format.DateFormat;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -17,8 +18,10 @@ import android.widget.TimePicker;
 
 import org.w3c.dom.Text;
 
-import java.text.DateFormat;
+//import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity implements TimePickerDialog.OnTimeSetListener {
 
@@ -49,6 +52,11 @@ public class MainActivity extends AppCompatActivity implements TimePickerDialog.
 
     private void updateTime(Calendar c) {
         String text = "Alarm set for: "; //+ DateFormat.getTimeInstance(DateFormat.SHORT).format(c);
+        if(DateFormat.is24HourFormat(this)){
+            text += new SimpleDateFormat("k:m", Locale.ENGLISH).format(c.getTime());
+        } else {
+            text += new SimpleDateFormat("K:m a", Locale.ENGLISH).format(c.getTime());
+        }
         TextView textView = (TextView) findViewById(R.id.textView2);
         textView.setText(text);
     }
